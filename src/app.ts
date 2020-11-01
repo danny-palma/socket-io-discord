@@ -15,7 +15,7 @@ export default class App {
         this.routes();
     }
     private settings(): void {
-        this.app.set("port", this.port || process.env.PORT || 3000);
+        this.app.set("port", process.env.PORT || this.port || 3000);
         this.app.set("views", join(__dirname, "views"));
         this.app.set("view engine", ".hbs")
     }
