@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: "future";
+    src: url("/fonts/dark-future.ttf");
+}
+
+@font-face {
     font-family: "neue";
     src: url("/fonts/neue-regular.ttf");
 }
@@ -19,7 +24,7 @@
 strong.login-title {
     color: rgba(255, 255, 255, .7);
     font-size: 20px;
-    font-family: whitney;
+    font-family: inherit;
 }
 
 #login-form {
