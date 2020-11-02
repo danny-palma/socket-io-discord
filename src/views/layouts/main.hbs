@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord</title>
+    <link rel="shortcut icon" href="/img/discord-icon.webp" type="image/x-icon">
+    <title>
+        {{#if title}}
+            {{title}}
+        {{else}}
+            Discord
+        {{/if}}
+    </title>
 </head>
 <body>
     {{{body}}}
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/scripts/main.js"></script>
+    {{> links}}
 </body>
 </html>

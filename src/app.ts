@@ -1,9 +1,11 @@
 import initsoket from "./websocket";
 import { Server } from "http"
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response, ErrorRequestHandler, NextFunction } from "express";
 import ehbs from "express-handlebars";
 import { join } from "path";
 import routerMain from "./routes/router.main";
+import routerUsers from "./routes/router.users";
+import { urlencoded } from "body-parser";
 
 export default class App {
 
@@ -22,6 +24,7 @@ export default class App {
         this.app.disable("x-powered-by");
     };
     private midlewares(): void {
+        this.app.use(urlencoded({ extended: true }))
         this.app.use(express.json());
         this.app.engine(".hbs", ehbs({
             layoutsDir: join(this.app.get("views"), "layouts"),
@@ -32,10 +35,15 @@ export default class App {
     };
     private routes(): void {
         this.app.use(routerMain);
+        this.app.use(routerUsers);
         this.app.use(express.static(join(__dirname, "public")));
         this.app.use((req: Request, res: Response) => {
             return res.status(404).send("this page doesn't exist");
         });
+        this.app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+            console.error(err);
+            res.status(500).send('Oh sh*t something broke');
+        })
     };
     public listen(callback: Function = () => { console.log(`Server on port ${this.app.get("port")}`) }): Server {
         const server = this.app.listen(this.app.get("port"), callback());
